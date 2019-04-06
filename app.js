@@ -81,14 +81,6 @@ function likeAndSort (itemName, itemValue) {
     return (allItems);
 }
 
-function date11(){
-    n =  new Date();
-    y = n.getFullYear();
-    m = n.getMonth() + 1;
-    d = n.getDate();
-
-    return m + "/" + d + "/" + y;
-}
 
 function deleteAll(){
     var myItems = Item.chain().find().remove();
@@ -111,8 +103,17 @@ app.get('/additem', function (request, response) {
     response.render('addpage',{loginName:request.session.user});
 });
 
+app.get('/like', function (request, response) {
+    var name = request.query.name;
+    var allItems = likeAndSort('name',name);
+    response.render('listpage',{ items:allItems});
+});
 
-
+app.get('/delete', function (request, response) {
+    var name = request.query.name;
+    var allItems = deleteAndSort('name',name);
+    response.render('listpage',{ items:allItems});
+});
 // click Welcome on login page
 app.post('/login', function (request, response) {
     var loginName = request.body.loginName;
@@ -136,17 +137,6 @@ app.post('/saveitem', function (request, response) {
 
     console.log(request.body);
     var items = saveFormAndReturnAllItems(request.body);
-    var date = date11();
-    var likes = 0;
-/*    var gameName = request.body.name;
-    var gameDev = request.body.developer;
-    var gameLink = request.body.link;
-    var gameLink = request.body.link;
-    var gamePrice = request.body.price;
-    var gameAddedBy = request.body.addedBy;*/
-    // hint #1: find the helper function that will help save the information first
-    // hint #2: make sure to send the list of items to the list page
-    console.log(items);
-    response.render('listpage',{ items:items , date:date});
+    response.render('listpage',{ items:items });
 });
 
