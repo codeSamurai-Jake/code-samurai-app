@@ -22,6 +22,7 @@ function databaseInitialize() {
         User = db.addCollection("users");
         User.insert({username:'admin',password:'admin'});
         User.insert({username:'user',password:'user'});
+        User.insert({username:'hi',password:'hi'});
     }
     if (Item === null) {
         Item = db.addCollection('items');
@@ -80,6 +81,18 @@ function likeAndSort (itemName, itemValue) {
     return (allItems);
 }
 
+function date11(){
+    n =  new Date();
+    y = n.getFullYear();
+    m = n.getMonth() + 1;
+    d = n.getDate();
+
+    return m + "/" + d + "/" + y;
+}
+
+function deleteAll(){
+    var myItems = Item.chain().find().remove();
+}
 // ---------- do not change above unless you know what you are doing :) -----------
 // ---------- use the helper functions above as and when you need them ------------
 // ---------- your code starts below this comment ---------------------------------
@@ -107,12 +120,13 @@ app.post('/login', function (request, response) {
 
     // save login name in session so it's available later
     request.session.user = loginName;
-
+    var valid = userPasswordMatch(loginName,password);
     //hint: check is password is good or not, if not load same page with error as below
-    //response.render('index', {message: "Invalid user name or password"});
-
-    response.render('listpage', {items: Item.find()});
-
+    if(valid){
+        response.render('listpage', {items: Item.find()});
+    }else{
+        response.render('index', {message: "Invalid user name or password"});
+    }
 });
 
 
@@ -120,9 +134,19 @@ app.post('/login', function (request, response) {
 // when save button is clicked on add page
 app.post('/saveitem', function (request, response) {
 
+    console.log(request.body);
+    var items = saveFormAndReturnAllItems(request.body);
+    var date = date11();
+    var likes = 0;
+/*    var gameName = request.body.name;
+    var gameDev = request.body.developer;
+    var gameLink = request.body.link;
+    var gameLink = request.body.link;
+    var gamePrice = request.body.price;
+    var gameAddedBy = request.body.addedBy;*/
     // hint #1: find the helper function that will help save the information first
     // hint #2: make sure to send the list of items to the list page
-
-    response.render('listpage',{ items:[] });
+    console.log(items);
+    response.render('listpage',{ items:items , date:date});
 });
 

@@ -1,24 +1,51 @@
 <!DOCTYPE html>
 <html>
-<head> <% include ./head %> </head>
+    <head> <% include ./head %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
 <body>
 <% include ./header %>
 
-    <a class="btn" href="/additem">Add New Item</a>
+    <a class="btn" href="/additem" >Add New Item</a>
 
     <div class="card">
 
     <table class="highlight">
         <tr>
-            <th>Song</th><th>Singer</th><th>Added By</th><th>Likes</th><th>Actions</th>
+            <th>Name</th><th>Developer</th><th>Game Link</th><th>Genre</th><th>Price</th><th>Added By</th><th>Likes</th><th>Actions</th><th>Date Added</th>
         </tr>
 
         <% items.forEach(function(item){  %>
+        <tr>
+            <td>
+                <%= item.name %>
+            </td>
+            <td>
+                <%= item.developer %>
+            </td>
+            <td>
+                <a onclick="window.location.href='<%= item.link %>'">Link</a>
+            </td>
+            <td>
+                <%= item.genre %>
+            </td>
+            <td>
+                $<%= item.price %>
+            </td>
+            <td>
+                <%= item.addedBy %>
+            </td>
+            <td>
 
+            </td>
+            <td>
+                <i class="fa fa-heart"></i>
+            </td>
+            <td>
+                <%= date %>
+            </td>
 
-
-
-
+        </tr>
         <% }) %>
     </table>
 

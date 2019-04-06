@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head> <% include ./head %> </head>
-<body>
+<body class="">
 <% include ./header %>
 
-<h5><%= message %></h5>
+<h5 class="red-text text-darken-2"><%= message %></h5>
 <div class="card">
 
     <form method="post" action="login">
 
-        User Name: <input type="text" name="loginName"/>
-        Password: <input type="password" name="password"/>
+        User Name: <input type="text" name="loginName" required/>
+        Password: <input type="password" name="password" required/>
 
         <button class="btn" type="submit" name="submit">Welcome</button>
 
